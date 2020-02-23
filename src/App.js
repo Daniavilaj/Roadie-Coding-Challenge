@@ -10,7 +10,7 @@ function ReviewCard(props) {
       <div className="review-header">
         <div className="review-title">
           <div className="review-title">{props.review.Title}</div>
-          <div className="user">by {props.User} on {props.review.Date}</div>
+          <div className="user">by {props.review.User} on {props.review.Date}</div>
         </div>
         <div className="stars">{props.review.Stars}</div>
       </div>
@@ -19,21 +19,53 @@ function ReviewCard(props) {
   )
 }
 
-function App() {
-  return (
+function Modal(props) {
+    return(
+      <div>
+        {props.show 
+          ? <section className="modal">
+              <div className="modal-container">
+                <span className="close-button" onClick={props.close}>&times;</span>
+              </div> 
+            </section>
+          : null
+        }
+      </div>
+    )
+}
+
+class App extends React.Component {
+  state = { 
+      show: false,
+      };
+
+  showModal = () => {
+    this.setState({ show: true });
+  } 
+  
+  hideModal = () => {
+    this.setState({ show: false });
+  } 
+
+  render() {
+    return (
     <div className="App">
       <header className="header"></header>
       <main className="main">
+        {/* ---------------------- */}
         <div className="info">
           <img className="roadie-image" src={RoadieComm} alt="Roadie Communicator"/>
           <div className="roadie-info">
             <div className="tile">ROADIE COMMUNICATOR - INCLUDES INSTALLATION SOFTWARE</div>
             <div className="subtitle">by Roadie</div>
-            <div className="description">Lorem ipsum dolor sit amet, eam at tempor constituam. Volumus eleifend repudiandae ad mel.</div>
-            <button type="button">LEAVE REVIEW</button>
-            <button type="button">ADD TO CART</button>
+            <p className="description">Lorem ipsum dolor sit amet, eam at tempor constituam. Volumus eleifend repudiandae ad mel.</p>
+            <button type="modal" onClick={this.showModal}>LEAVE REVIEW</button>
+            <button>ADD TO CART</button>
           </div>
         </div>
+        {/* -------Modal----------- */}
+        <Modal show={this.state.show} close={this.hideModal}></Modal>
+        {/* -----------Reviews---------------- */}
         <div className="customer-reviews">
           <div className="tile">CUSTOMER REVIEWS</div>
           <div className="reviews-container">
@@ -47,7 +79,8 @@ function App() {
         </div>
       </main>
     </div>
-  );
+    );
+  }
 }
 
 export default App;
