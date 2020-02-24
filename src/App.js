@@ -1,7 +1,8 @@
 import React from 'react';
 import RoadieComm from './assets/Software-Box-Mock-Up.jpg';
 import './App.css';
-import ReviewsData from './data/Reviews.js';
+// import ReviewsData from './data/Reviews.json';
+import ReviewForm from './components/reviewForm/ReviewForm.js';
 
 
 function ReviewCard(props) {
@@ -26,6 +27,7 @@ function Modal(props) {
           ? <section className="modal">
               <div className="modal-container">
                 <span className="close-button" onClick={props.close}>&times;</span>
+                <ReviewForm close={props.close}></ReviewForm>
               </div> 
             </section>
           : null
@@ -35,9 +37,24 @@ function Modal(props) {
 }
 
 class App extends React.Component {
-  state = { 
+    state = {
       show: false,
-      };
+      reviews: []
+    }
+
+    componentDidMount() {
+      fetch(`data/reviews.json`)
+        .then(res => res.json())
+        .then(
+          (data) => {
+          this.setState({
+            reviews: data.reviews
+          })
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
 
   showModal = () => {
     this.setState({ show: true });
@@ -48,6 +65,7 @@ class App extends React.Component {
   } 
 
   render() {
+    console.log(this.state.reviews)
     return (
     <div className="App">
       <header className="header"></header>
@@ -71,7 +89,7 @@ class App extends React.Component {
           <div className="reviews-container">
             <div className="rating-container">raiting container</div>
             <div className="reviews">
-              {ReviewsData.map((review, index) => {
+              {this.state.reviews.map((review, index) => {
                 return <ReviewCard key={index} review={review}/>
               })}
             </div>
