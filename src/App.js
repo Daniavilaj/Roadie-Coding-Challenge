@@ -4,6 +4,18 @@ import './App.css';
 import ReviewForm from './components/reviewForm/ReviewForm.js';
 
 
+function AverageRating(props) {
+  return(
+    <div className="average-rating">
+      <button type="button" value="5" onClick={e => props.filterReviews(e.target.value)}>5 star</button>
+      <button type="button" value="4" onClick={e => props.filterReviews(e.target.value)}>4 star</button>
+      <button type="button" value="3" onClick={e => props.filterReviews(e.target.value)}>3 star</button>
+      <button type="button" value="2" onClick={e => props.filterReviews(e.target.value)}>2 star</button>
+      <button type="button" value="1" onClick={e => props.filterReviews(e.target.value)}>1 star</button>
+    </div>
+  )
+}
+
 function ReviewCard(props) {
   return(
     <div className="review-card">
@@ -12,7 +24,7 @@ function ReviewCard(props) {
           <div className="review-title">{props.review.Title}</div>
           <div className="user">by {props.review.User} on {props.review.Date}</div>
         </div>
-        <div className="stars">{props.review.Stars}</div>
+        <div className="rating">{props.review.Rating}</div>
       </div>
       <div className="review">{props.review.Review}</div>
     </div>
@@ -41,12 +53,14 @@ class App extends React.Component {
 
     this.state = {
       show: false,
-      reviews: []
+      reviews: [],
+      filter: ""
     }
 
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.addReview = this.addReview.bind(this);
+    this.filterReviews = this.filterReviews.bind(this);
   }
 
   componentDidMount() {
@@ -72,10 +86,16 @@ class App extends React.Component {
   } 
 
   addReview(newReview) {
-    console.log("submit")
+    // console.log("submit")
     this.setState({
       reviews: [...this.state.reviews, newReview]
     });
+  }
+
+  filterReviews(rating) {
+    // console.log(rating)
+    this.setState({ filter: rating })
+    // console.log(this.state.filter)
   }
 
   render() {
@@ -101,10 +121,14 @@ class App extends React.Component {
         <div className="customer-reviews">
           <div className="tile">CUSTOMER REVIEWS</div>
           <div className="reviews-container">
-            <div className="rating-container">raiting container</div>
+            {/* <div className="rating-container">raiting container</div> */}
+            <AverageRating filterReviews={this.filterReviews}></AverageRating>
             <div className="reviews">
               {this.state.reviews.map((review, index) => {
-                return <ReviewCard key={index} review={review}/>
+                if(review.Rating === this.state.filter || this.state.filter === "") {
+                  return <ReviewCard key={index} review={review}/>
+                }
+                return null
               })}
             </div>
           </div>

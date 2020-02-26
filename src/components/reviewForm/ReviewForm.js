@@ -21,13 +21,13 @@ class ReviewForm extends React.Component {
       const rating = this.rating.value;
       const review = this.review.value;
 
-      console.log(date)
+      // console.log(typeof rating)
       
       const newData = {
         Title: title,
         User: name,
         Date: date,
-        Stars: rating,
+        Rating: rating,
         Review: review
       };
 
