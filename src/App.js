@@ -1,7 +1,6 @@
 import React from 'react';
 import RoadieComm from './assets/Software-Box-Mock-Up.jpg';
 import './App.css';
-// import ReviewsData from './data/Reviews.json';
 import ReviewForm from './components/reviewForm/ReviewForm.js';
 
 
@@ -27,7 +26,7 @@ function Modal(props) {
           ? <section className="modal">
               <div className="modal-container">
                 <span className="close-button" onClick={props.close}>&times;</span>
-                <ReviewForm close={props.close}></ReviewForm>
+                <ReviewForm close={props.close} addReview={props.addReview}></ReviewForm>
               </div> 
             </section>
           : null
@@ -37,32 +36,47 @@ function Modal(props) {
 }
 
 class App extends React.Component {
-    state = {
+  constructor() {
+    super();
+
+    this.state = {
       show: false,
       reviews: []
     }
 
-    componentDidMount() {
-      fetch(`data/reviews.json`)
-        .then(res => res.json())
-        .then(
-          (data) => {
-          this.setState({
-            reviews: data.reviews
-          })
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    }
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
+    this.addReview = this.addReview.bind(this);
+  }
 
-  showModal = () => {
+  componentDidMount() {
+    fetch(`data/reviews.json`)
+      .then(res => res.json())
+      .then(
+        (data) => {
+        this.setState({
+          reviews: data.reviews
+        })
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  showModal() {
     this.setState({ show: true });
   } 
   
-  hideModal = () => {
+  hideModal() {
     this.setState({ show: false });
   } 
+
+  addReview(newReview) {
+    console.log("submit")
+    this.setState({
+      reviews: [...this.state.reviews, newReview]
+    });
+  }
 
   render() {
     console.log(this.state.reviews)
@@ -82,7 +96,7 @@ class App extends React.Component {
           </div>
         </div>
         {/* -------Modal----------- */}
-        <Modal show={this.state.show} close={this.hideModal}></Modal>
+        <Modal show={this.state.show} close={this.hideModal} addReview={this.addReview}></Modal>
         {/* -----------Reviews---------------- */}
         <div className="customer-reviews">
           <div className="tile">CUSTOMER REVIEWS</div>

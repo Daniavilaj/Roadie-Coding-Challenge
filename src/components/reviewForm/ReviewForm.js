@@ -1,21 +1,38 @@
 import React from 'react';
 
 class ReviewForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {value: ''};
+    constructor() {
+      super();
+
+      this.state = {
+        newReview: { }
+      };
   
-      this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
   
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.value);
+    handleSubmit(event){
       event.preventDefault();
+
+      const title = this.title.value;
+      const name = this.name.value;
+      var today = new Date();
+      const date = ('0' + (today.getMonth()+1)).slice(-2) + '/' + ('0' + today.getDate()).slice(-2) + '/' + today.getFullYear().toString().substr(-2);    
+      const rating = this.rating.value;
+      const review = this.review.value;
+
+      console.log(date)
+      
+      const newData = {
+        Title: title,
+        User: name,
+        Date: date,
+        Stars: rating,
+        Review: review
+      };
+
+      this.props.addReview(newData)
+      this.props.close()
     }
   
     render() {
@@ -24,7 +41,7 @@ class ReviewForm extends React.Component {
             <div className="title">ADD REVIEW</div>
             <label>
                 <p>Rating</p>
-                <select value={this.state.value} onChange={this.handleChange}>
+                <select ref={value => this.rating = value}>
                     <option value="1">One star</option>
                     <option value="2">Two stars</option>
                     <option value="3">Three stars</option>
@@ -34,20 +51,19 @@ class ReviewForm extends React.Component {
             </label>
             <label>
                 <p>Your name</p>
-                <input type="text" onChange={this.handleChange} />
+                <input type="text" ref={input => this.name = input} />
             </label>
             <label>
                 <p>Review title</p>
-                <input type="text" onChange={this.handleChange} />
+                <input type="text" ref={input => this.title = input} />
             </label>
             <label>
                 <p>Write your review below</p>
-                <input type="text" onChange={this.handleChange} />
+                <input type="text" ref={input => this.review = input} />
             </label>
             <div>
-                <button onClick={this.props.close}>CANCEL</button>
-                <button>SUBMIT</button>
-                {/* <input type="submit" value="Submit"/> */}
+                <button type="cancel" onClick={this.props.close}>CANCEL</button>
+                <button type="submit" >SUBMIT</button>
             </div>
         </form>
       );
