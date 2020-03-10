@@ -20,8 +20,6 @@ class ReviewForm extends React.Component {
       const date = ('0' + (today.getMonth()+1)).slice(-2) + '/' + ('0' + today.getDate()).slice(-2) + '/' + today.getFullYear().toString().substr(-2);    
       const rating = this.rating.value;
       const review = this.review.value;
-
-      // console.log(typeof rating)
       
       const newData = {
         Title: title,
@@ -43,10 +41,10 @@ class ReviewForm extends React.Component {
                 <p>Rating</p>
                 <select ref={value => this.rating = value}>
                     <option value="1">One star</option>
-                    <option value="2">Two stars</option>
-                    <option value="3">Three stars</option>
-                    <option value="4">Four stars</option>
-                    <option value="5">Five stars</option>
+                    <option value="2">Two star</option>
+                    <option value="3">Three star</option>
+                    <option value="4">Four star</option>
+                    <option value="5">Five star</option>
                 </select>
             </label>
             <label>

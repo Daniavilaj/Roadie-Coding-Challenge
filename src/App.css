@@ -3,7 +3,7 @@
 }
 
 .main {
-  padding: 60px;
+  padding: 60px 150px;
   display: flex;
   flex-direction: column;
   background-color: red;
@@ -12,6 +12,14 @@
 .header {
   height: 50px;
   background-color: black;
+}
+
+.title {
+  margin: 0px;
+}
+
+.description2 {
+  margin-left: 30px;
 }
 
 .info {
@@ -33,41 +41,6 @@
   padding: 0px 40px;
   text-align: left;
   background-color: green;
-}
-
-.customer-reviews {
-  margin-top: 20px;
-  background-color: palegreen;
-  text-align: left;
-}
-
-.reviews-container {
-  display: flex;
-  flex-direction: row;
-  margin-top: 30px;
-  /* justify-content: space-between; */
-}
-
-.reviews {
-  display: flex;
-  flex-flow: row wrap;
-  background-color: purple;
-  /* justify-content: space-between; */
-}
-
-.review-card {
-  height: 250px;
-  width: 250px;
-  background-color: white;
-  padding: 15px;
-  border-radius: 5px;
-  border: 0.5px solid rgb(211, 211, 211);
-  margin: 5px;
-}
-
-.review-header {
-  display: flex;
-  flex-direction: row;
 }
 
 .modal{
@@ -102,12 +75,81 @@
   cursor: pointer;
 }
 
-.average-rating {
+.customer-reviews {
+  margin-top: 20px;
+  background-color: palegreen;
+  text-align: left;
+}
+
+.reviews-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-top: 20px;
+  /* width: 60%; */
+  /* justify-content: space-between; */
+}
+
+.reviews {
+  display: flex;
+  flex-flow: row wrap;
+  background-color: purple;
+  flex-grow: 2;
+  /* width: 70%; */
+  /* justify-content: center; */
+  /* justify-content: space-between; */
+}
+
+.review-card {
+  height: 250px;
+  width: 280px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  border: 0.5px solid rgb(211, 211, 211);
+  margin: 5px;
+}
+
+.review-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.ratings-container {
   display: flex;
   flex-direction: column;
+  flex-grow: 0;
   height: 100px;
-  width: 100px;
+  width: 550px;
+  /* width: 40%; */
+  margin-right: 30px;
   background-color: thistle;
+}
+
+.rating-bars-container {
+  display: flex;
+  flex-direction: row;
+  padding: 0px 0px 5px 0px;
+  height: 30px;
+}
+
+.rating-button {
+  /* height: 100%; */
+  width: 60px;
+}
+
+.rating-bar {
+  height: 20px;
+  width: 100%;
+  margin-left: 10px;
+  background-color: white;
+}
+
+.rating-bar-fill {
+  height: 20px;
+  /* width: 50%; */
+  background-color: rgb(189, 176, 0);
 }
 
 @media (prefers-reduced-motion: no-preference) {

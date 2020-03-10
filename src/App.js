@@ -2,18 +2,107 @@ import React from 'react';
 import RoadieComm from './assets/Software-Box-Mock-Up.jpg';
 import './App.css';
 import ReviewForm from './components/reviewForm/ReviewForm.js';
+// import ProgressBar from 'react-bootstrap/ProgressBar'
 
 
-function AverageRating(props) {
-  return(
-    <div className="average-rating">
-      <button type="button" value="5" onClick={e => props.filterReviews(e.target.value)}>5 star</button>
-      <button type="button" value="4" onClick={e => props.filterReviews(e.target.value)}>4 star</button>
-      <button type="button" value="3" onClick={e => props.filterReviews(e.target.value)}>3 star</button>
-      <button type="button" value="2" onClick={e => props.filterReviews(e.target.value)}>2 star</button>
-      <button type="button" value="1" onClick={e => props.filterReviews(e.target.value)}>1 star</button>
+function RatingBar(props) {
+  return (
+    <div className="ratings-container">
+      <div className="rating-bars-container">
+        <button className="rating-button" type="button" value={props.key} onClick={e => props.filterReviews(e.target.value)}>{props.key} star</button>
+        <div className="rating-bar">
+          <div className="rating-bar-fill" style={ { "width": props.fillWidth} }></div>
+        </div>
+      </div>
     </div>
   )
+}
+
+function Ratings(props) {
+  let ratingCount = new Map()
+  // console.log(rating)
+
+  for (var i=1; i<6; i++) {
+    ratingCount.set(i,0)
+  }
+
+  props.state.reviews.map((review, index) => {
+    const rating = review.Rating;
+    // console.log(review.Rating)
+    switch(rating) {
+      case "1":
+        ratingCount.set(1,ratingCount.get(1) + 1)
+        break;
+      case "2":
+        ratingCount.set(2,ratingCount.get(2) + 1)
+        break;
+      case "3":
+        ratingCount.set(3,ratingCount.get(3) + 1)
+        break;
+      case "4":
+        ratingCount.set(4,ratingCount.get(4) + 1)
+        break;
+      case "5":
+        ratingCount.set(5,ratingCount.get(5) + 1)
+        break;
+      default: 
+        return null
+    }
+    return null
+  })
+    // console.log(ratingCount)
+  const numReviews = props.state.numReviews 
+  // const width = 550
+  var fillWidth = 0
+  // var fillWidth = 0
+
+  // console.log(numReviews)
+  for (let [key,value] of ratingCount) {
+    fillWidth = ((value * 100) / numReviews) + '%'
+    console.log(key + " = " + value + " -> " + fillWidth)
+    return (
+      <div className="ratings-container">
+       <div className="rating-bars-container">
+         <button className="rating-button" type="button" value={key} onClick={e => props.filterReviews(e.target.value)}>{key} star</button>
+         <div className="rating-bar">
+           <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
+         </div>
+       </div></div>
+    )
+  }
+
+  // ratingCount.map((ratingBar, index) => {
+  //   fillWidth = ((ratingBar.value * 100) / numReviews) + '%'
+  //   console.log(ratingBar.key + " = " + ratingBar.value + " -> " + fillWidth)
+  //   return (
+  //     <div className="ratings-container">
+  //      <div className="rating-bars-container">
+  //        <button className="rating-button" type="button" value={ratingBar.key} onClick={e => props.filterReviews(e.target.value)}>{ratingBar.key} star</button>
+  //        <div className="rating-bar">
+  //          <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
+  //        </div>
+  //      </div></div>
+  //   )
+  // })
+
+  
+
+  // return(
+  //   <div className="ratings-container">
+  //     <div className="rating-bars-container">
+  //       <button className="rating-button" type="button" value="5" onClick={e => props.filterReviews(e.target.value)}>5 star</button>
+  //       <div className="rating-bar">
+  //         <div className="rating-bar-fill" style={ { "width": "30%" } }></div>
+  //       </div>
+  //     </div>
+      
+  //     <button type="button" value="4" onClick={e => props.filterReviews(e.target.value)}>4 star</button>
+  //     <button type="button" value="3" onClick={e => props.filterReviews(e.target.value)}>3 star</button>
+  //     <button type="button" value="2" onClick={e => props.filterReviews(e.target.value)}>2 star</button>
+  //     <button type="button" value="1" onClick={e => props.filterReviews(e.target.value)}>1 star</button>
+  //     <button type="button" value="" onClick={e => props.filterReviews(e.target.value)}>All reviews</button>
+  //   </div>
+  // )
 }
 
 function ReviewCard(props) {
@@ -54,7 +143,13 @@ class App extends React.Component {
     this.state = {
       show: false,
       reviews: [],
-      filter: ""
+      filter: "",
+      numReviews: null,
+      one: 0,
+      two: 0,
+      three: 0,
+      four: 0,
+      five: 0
     }
 
     this.showModal = this.showModal.bind(this);
@@ -69,7 +164,8 @@ class App extends React.Component {
       .then(
         (data) => {
         this.setState({
-          reviews: data.reviews
+          reviews: data.reviews,
+          numReviews: data.reviews.length
         })
       })
       .catch(error => {
@@ -86,10 +182,12 @@ class App extends React.Component {
   } 
 
   addReview(newReview) {
-    // console.log("submit")
+    // console.log(this.state.numReviews)
     this.setState({
-      reviews: [...this.state.reviews, newReview]
+      reviews: [...this.state.reviews, newReview],
+      numReviews: this.state.numReviews + 1
     });
+    // console.log(this.state.numReviews)
   }
 
   filterReviews(rating) {
@@ -99,7 +197,8 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.reviews)
+    // console.log(this.state.reviews)
+    // console.log(this.state.five)
     return (
     <div className="App">
       <header className="header"></header>
@@ -108,9 +207,10 @@ class App extends React.Component {
         <div className="info">
           <img className="roadie-image" src={RoadieComm} alt="Roadie Communicator"/>
           <div className="roadie-info">
-            <div className="tile">ROADIE COMMUNICATOR - INCLUDES INSTALLATION SOFTWARE</div>
-            <div className="subtitle">by Roadie</div>
+            <h2 className="title">ROADIE COMMUNICATOR - INCLUDES INSTALLATION SOFTWARE</h2>
+            <div className="subtitle">by <b>Roadie</b></div>
             <p className="description">Lorem ipsum dolor sit amet, eam at tempor constituam. Volumus eleifend repudiandae ad mel.</p>
+            <p className="description2">&bull; Lorem ipsum dolor sit amet, eam at tempor constituam. Volumus eleifend repudiandae ad mel.</p>
             <button type="modal" onClick={this.showModal}>LEAVE REVIEW</button>
             <button>ADD TO CART</button>
           </div>
@@ -119,10 +219,12 @@ class App extends React.Component {
         <Modal show={this.state.show} close={this.hideModal} addReview={this.addReview}></Modal>
         {/* -----------Reviews---------------- */}
         <div className="customer-reviews">
-          <div className="tile">CUSTOMER REVIEWS</div>
+          <h2 className="title">CUSTOMER REVIEWS</h2>
           <div className="reviews-container">
+            {/* -----------Ratings---------------- */}
+
             {/* <div className="rating-container">raiting container</div> */}
-            <AverageRating filterReviews={this.filterReviews}></AverageRating>
+            <Ratings state={this.state} filterReviews={this.filterReviews}></Ratings>
             <div className="reviews">
               {this.state.reviews.map((review, index) => {
                 if(review.Rating === this.state.filter || this.state.filter === "") {
