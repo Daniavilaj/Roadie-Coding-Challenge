@@ -119,7 +119,7 @@
 .ratings-container {
   display: flex;
   flex-direction: column;
-  flex-grow: 0;
+  /* flex-grow: 0; */
   height: 100px;
   width: 550px;
   /* width: 40%; */
@@ -129,9 +129,15 @@
 
 .rating-bars-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 0px 0px 5px 0px;
   height: 30px;
+}
+
+.rating {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 10px;
 }
 
 .rating-button {

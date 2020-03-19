@@ -5,45 +5,91 @@ import ReviewForm from './components/reviewForm/ReviewForm.js';
 // import ProgressBar from 'react-bootstrap/ProgressBar'
 
 
-function RatingBar(props) {
-  return (
-    <div className="ratings-container">
-      <div className="rating-bars-container">
-        <button className="rating-button" type="button" value={props.key} onClick={e => props.filterReviews(e.target.value)}>{props.key} star</button>
-        <div className="rating-bar">
-          <div className="rating-bar-fill" style={ { "width": props.fillWidth} }></div>
-        </div>
+function RatingBars(props) {
+  var fillWidth = 0
+  fillWidth = ((props.rating * 100) / props.numReviews) + '%'
+  console.log(props.key)
+  console.log(props.rating)
+  console.log(fillWidth)
+  return(
+    <div className="rating" key={props.key} value={props.rating}>
+      <button className="rating-button" type="button" key={props.key} value={props.key + 1} onClick={e => props.filterReviews(e.target.value)}>{props.key + 1} star</button>
+      <div className="rating-bar">
+        <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
       </div>
     </div>
   )
 }
+  // return(
+  //   <div>
+  //     {props.ratingCount.map((rating, index) => (
+  //       // fillWidth = ((rating * 100) / props.numReviews) + '%'
+  //       // console.log(rating)
+  //       // console.log("index " + index)
+  //       // console.log(index + " = " + rating + " -> " + fillWidth)
+  //       // return (
+  //         <div>
+  //           <button className="rating-button" type="button" key={index} value={index} onClick={e => props.filterReviews(e.target.value)}>{index + 1} star</button>
+  //           <div className="rating-bar">
+  //             <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
+  //           </div>
+  //         </div>
+  //       // )
+  //     )
+  //   )
+  //   }
+  //   </div>
+  // )
+
+  // for (let [key,value] of props.ratingCount) {
+  //   fillWidth = ((value * 100) / props.numReviews) + '%'
+  //   // console.log(key + " = " + value + " -> " + fillWidth)
+  //   return (
+  //     <div>
+  //       <button className="rating-button" type="button" value={key} onClick={e => props.filterReviews(e.target.value)}>{key} star</button>
+  //       <div className="rating-bar">
+  //         <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
 function Ratings(props) {
-  let ratingCount = new Map()
+  var ratingCount = []
+  const numReviews = props.state.numReviews 
+  var averageRating = 0
+  // var fillWidth = 0
   // console.log(rating)
 
-  for (var i=1; i<6; i++) {
-    ratingCount.set(i,0)
+  for (var i=0; i<5; i++) {
+    ratingCount[i] = 0
   }
 
   props.state.reviews.map((review, index) => {
-    const rating = review.Rating;
+    const rating = parseInt(review.Rating);
     // console.log(review.Rating)
+    averageRating = averageRating + rating
+    // console.log(averageRating)
     switch(rating) {
-      case "1":
-        ratingCount.set(1,ratingCount.get(1) + 1)
+      case 1:
+        ratingCount[4] = ratingCount[4] + 1
+        // ratingCount.set(1,ratingCount.get(1) + 1)
         break;
-      case "2":
-        ratingCount.set(2,ratingCount.get(2) + 1)
+      case 2:
+        ratingCount[3] = ratingCount[3] + 1
+        // ratingCount.set(2,ratingCount.get(2) + 1)
         break;
-      case "3":
-        ratingCount.set(3,ratingCount.get(3) + 1)
+      case 3:
+        ratingCount[2] = ratingCount[2] + 1
+        // ratingCount.set(3,ratingCount.get(3) + 1)
         break;
-      case "4":
-        ratingCount.set(4,ratingCount.get(4) + 1)
+      case 4:
+        ratingCount[1] = ratingCount[1] + 1
+        // ratingCount.set(4,ratingCount.get(4) + 1)
         break;
-      case "5":
-        ratingCount.set(5,ratingCount.get(5) + 1)
+      case 5:
+        ratingCount[0] = ratingCount[0] + 1
+        // ratingCount.set(5,ratingCount.get(5) + 1)
         break;
       default: 
         return null
@@ -51,25 +97,46 @@ function Ratings(props) {
     return null
   })
     // console.log(ratingCount)
-  const numReviews = props.state.numReviews 
-  // const width = 550
-  var fillWidth = 0
-  // var fillWidth = 0
+  
+  averageRating = Math.floor(averageRating / numReviews)
+  // console.log(averageRating)
+
+  return(
+    <div className="ratings-container">
+      <div>{averageRating} out of 5</div>
+      <div>{numReviews} reviews</div>
+      <div className="rating-bars-container">
+        {ratingCount.map((rating, index) => (
+          <RatingBars rating={rating} key={index} numReviews={numReviews}></RatingBars>
+          // fillWidth = ((rating * 100) / props.numReviews) + '%'
+          // <div className="rating" key={index} value={rating}>
+          //   <button className="rating-button" type="button" key={index} value={index + 1} onClick={e => props.filterReviews(e.target.value)}>{index + 1} star</button>
+          //   <div className="rating-bar">
+          //     <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
+          //   </div>
+          // </div>
+        ))}
+        {/* <RatingBars ratingCount={ratingCount} numReviews={numReviews} filterReviews={props.filterReviews}></RatingBars> */}
+        <button type="button" value="" onClick={e => props.filterReviews(e.target.value)}>All reviews</button>    
+      </div> 
+        {/* <button type="button" value="" onClick={e => props.filterReviews(e.target.value)}>All reviews</button>     */}
+    </div>
+  )
 
   // console.log(numReviews)
-  for (let [key,value] of ratingCount) {
-    fillWidth = ((value * 100) / numReviews) + '%'
-    console.log(key + " = " + value + " -> " + fillWidth)
-    return (
-      <div className="ratings-container">
-       <div className="rating-bars-container">
-         <button className="rating-button" type="button" value={key} onClick={e => props.filterReviews(e.target.value)}>{key} star</button>
-         <div className="rating-bar">
-           <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
-         </div>
-       </div></div>
-    )
-  }
+  // for (let [key,value] of ratingCount) {
+  //   fillWidth = ((value * 100) / numReviews) + '%'
+  //   console.log(key + " = " + value + " -> " + fillWidth)
+  //   return (
+      
+  //      <div className="rating-bars-container">
+  //        <button className="rating-button" type="button" value={key} onClick={e => props.filterReviews(e.target.value)}>{key} star</button>
+  //        <div className="rating-bar">
+  //          <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
+  //        </div>
+  //      </div>
+  //   )
+  // }
 
   // ratingCount.map((ratingBar, index) => {
   //   fillWidth = ((ratingBar.value * 100) / numReviews) + '%'
