@@ -2,68 +2,43 @@ import React from 'react';
 import RoadieComm from './assets/Software-Box-Mock-Up.jpg';
 import './App.css';
 import ReviewForm from './components/reviewForm/ReviewForm.js';
+import StarRating from './components/starRating/StarRating';
 // import ProgressBar from 'react-bootstrap/ProgressBar'
 
 
 function RatingBars(props) {
   var fillWidth = 0
   fillWidth = ((props.rating * 100) / props.numReviews) + '%'
-  console.log(props.key)
-  console.log(props.rating)
-  console.log(fillWidth)
+  // console.log(props.index)
+  // console.log(props.rating)
+  // console.log(fillWidth)
+  // console.log(props.star)
   return(
-    <div className="rating" key={props.key} value={props.rating}>
-      <button className="rating-button" type="button" key={props.key} value={props.key + 1} onClick={e => props.filterReviews(e.target.value)}>{props.key + 1} star</button>
+    <div className="rating" key={props.star} value={props.rating}>
+      <button className="rating-button" type="button" key={props.star} value={props.star} onClick={e => props.filterReviews(e.target.value)}>{props.star} star</button>
       <div className="rating-bar">
         <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
       </div>
     </div>
   )
 }
-  // return(
-  //   <div>
-  //     {props.ratingCount.map((rating, index) => (
-  //       // fillWidth = ((rating * 100) / props.numReviews) + '%'
-  //       // console.log(rating)
-  //       // console.log("index " + index)
-  //       // console.log(index + " = " + rating + " -> " + fillWidth)
-  //       // return (
-  //         <div>
-  //           <button className="rating-button" type="button" key={index} value={index} onClick={e => props.filterReviews(e.target.value)}>{index + 1} star</button>
-  //           <div className="rating-bar">
-  //             <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
-  //           </div>
-  //         </div>
-  //       // )
-  //     )
-  //   )
-  //   }
-  //   </div>
-  // )
-
-  // for (let [key,value] of props.ratingCount) {
-  //   fillWidth = ((value * 100) / props.numReviews) + '%'
-  //   // console.log(key + " = " + value + " -> " + fillWidth)
-  //   return (
-  //     <div>
-  //       <button className="rating-button" type="button" value={key} onClick={e => props.filterReviews(e.target.value)}>{key} star</button>
-  //       <div className="rating-bar">
-  //         <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
-  //       </div>
-  //     </div>
-  //   )
-  // }
 
 function Ratings(props) {
-  var ratingCount = []
+  const stars = [5,4,3,2,1]
+  var ratingCounts = []
+  // var starButtons = []
   const numReviews = props.state.numReviews 
   var averageRating = 0
   // var fillWidth = 0
   // console.log(rating)
 
-  for (var i=0; i<5; i++) {
-    ratingCount[i] = 0
+  for (let i=0; i<5; i++) {
+    ratingCounts[i] = 0
   }
+
+  // for (let i=0; i<5; i++) {
+  //   starButtons[i] = i
+  // }
 
   props.state.reviews.map((review, index) => {
     const rating = parseInt(review.Rating);
@@ -72,42 +47,40 @@ function Ratings(props) {
     // console.log(averageRating)
     switch(rating) {
       case 1:
-        ratingCount[4] = ratingCount[4] + 1
-        // ratingCount.set(1,ratingCount.get(1) + 1)
+        ratingCounts[4] = ratingCounts[4] + 1
         break;
       case 2:
-        ratingCount[3] = ratingCount[3] + 1
-        // ratingCount.set(2,ratingCount.get(2) + 1)
+        ratingCounts[3] = ratingCounts[3] + 1
         break;
       case 3:
-        ratingCount[2] = ratingCount[2] + 1
-        // ratingCount.set(3,ratingCount.get(3) + 1)
+        ratingCounts[2] = ratingCounts[2] + 1
         break;
       case 4:
-        ratingCount[1] = ratingCount[1] + 1
-        // ratingCount.set(4,ratingCount.get(4) + 1)
+        ratingCounts[1] = ratingCounts[1] + 1
         break;
       case 5:
-        ratingCount[0] = ratingCount[0] + 1
-        // ratingCount.set(5,ratingCount.get(5) + 1)
+        ratingCounts[0] = ratingCounts[0] + 1
         break;
       default: 
         return null
     }
     return null
   })
-    // console.log(ratingCount)
+    // console.log(ratingCounts.length)
   
   averageRating = Math.floor(averageRating / numReviews)
-  // console.log(averageRating)
+  // console.log(ratingCounts.findIndex(2))
 
   return(
     <div className="ratings-container">
-      <div>{averageRating} out of 5</div>
+      <div className="average-container">
+        <StarRating static={true} rating={averageRating}/>
+        <div className="average">{averageRating} out of 5</div>
+      </div>
       <div>{numReviews} reviews</div>
       <div className="rating-bars-container">
-        {ratingCount.map((rating, index) => (
-          <RatingBars rating={rating} key={index} numReviews={numReviews}></RatingBars>
+        {stars.map((star, index) => (
+          <RatingBars key={star} star={star} rating={ratingCounts[index]} numReviews={numReviews} filterReviews={props.filterReviews}></RatingBars>
           // fillWidth = ((rating * 100) / props.numReviews) + '%'
           // <div className="rating" key={index} value={rating}>
           //   <button className="rating-button" type="button" key={index} value={index + 1} onClick={e => props.filterReviews(e.target.value)}>{index + 1} star</button>
@@ -116,15 +89,15 @@ function Ratings(props) {
           //   </div>
           // </div>
         ))}
-        {/* <RatingBars ratingCount={ratingCount} numReviews={numReviews} filterReviews={props.filterReviews}></RatingBars> */}
-        <button type="button" value="" onClick={e => props.filterReviews(e.target.value)}>All reviews</button>    
+        {/* <RatingBars ratingCounts={ratingCounts} numReviews={numReviews} filterReviews={props.filterReviews}></RatingBars> */}
+        <button className="rating-all-button" type="button" value="" onClick={e => props.filterReviews(e.target.value)}>All reviews</button>    
       </div> 
         {/* <button type="button" value="" onClick={e => props.filterReviews(e.target.value)}>All reviews</button>     */}
     </div>
   )
 
   // console.log(numReviews)
-  // for (let [key,value] of ratingCount) {
+  // for (let [key,value] of ratingCounts) {
   //   fillWidth = ((value * 100) / numReviews) + '%'
   //   console.log(key + " = " + value + " -> " + fillWidth)
   //   return (
@@ -138,7 +111,7 @@ function Ratings(props) {
   //   )
   // }
 
-  // ratingCount.map((ratingBar, index) => {
+  // ratingCounts.map((ratingBar, index) => {
   //   fillWidth = ((ratingBar.value * 100) / numReviews) + '%'
   //   console.log(ratingBar.key + " = " + ratingBar.value + " -> " + fillWidth)
   //   return (
@@ -173,16 +146,17 @@ function Ratings(props) {
 }
 
 function ReviewCard(props) {
+  // console.log(props.key)
   return(
     <div className="review-card">
       <div className="review-header">
-        <div className="review-title">
-          <div className="review-title">{props.review.Title}</div>
+        <div>
+          <b className="review-title">{props.review.Title}</b>
           <div className="user">by {props.review.User} on {props.review.Date}</div>
         </div>
-        <div className="rating">{props.review.Rating}</div>
+        <StarRating static={true} rating={props.review.Rating}/>
       </div>
-      <div className="review">{props.review.Review}</div>
+      <p className="review">{props.review.Review}</p>
     </div>
   )
 }
@@ -194,6 +168,7 @@ function Modal(props) {
           ? <section className="modal">
               <div className="modal-container">
                 <span className="close-button" onClick={props.close}>&times;</span>
+                <h2 className="title">ADD REVIEW</h2>
                 <ReviewForm close={props.close} addReview={props.addReview}></ReviewForm>
               </div> 
             </section>
@@ -272,14 +247,18 @@ class App extends React.Component {
       <main className="main">
         {/* ---------------------- */}
         <div className="info">
-          <img className="roadie-image" src={RoadieComm} alt="Roadie Communicator"/>
+          <div className="image-container">
+            <img className="roadie-image" src={RoadieComm} alt="Roadie Communicator"/>
+          </div>
           <div className="roadie-info">
             <h2 className="title">ROADIE COMMUNICATOR - INCLUDES INSTALLATION SOFTWARE</h2>
             <div className="subtitle">by <b>Roadie</b></div>
-            <p className="description">Lorem ipsum dolor sit amet, eam at tempor constituam. Volumus eleifend repudiandae ad mel.</p>
-            <p className="description2">&bull; Lorem ipsum dolor sit amet, eam at tempor constituam. Volumus eleifend repudiandae ad mel.</p>
-            <button type="modal" onClick={this.showModal}>LEAVE REVIEW</button>
-            <button>ADD TO CART</button>
+            <p className="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p className="description2">&bull;  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <div className="buttons-container">
+              <button className="button regular" type="modal" onClick={this.showModal}>LEAVE REVIEW</button>
+              <button className="button solid">ADD TO CART</button>
+            </div>
           </div>
         </div>
         {/* -------Modal----------- */}

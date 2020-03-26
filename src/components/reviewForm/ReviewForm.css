@@ -1,0 +1,60 @@
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding-top: 10px;
+    /* padding: 20px; */
+}
+
+label {
+    padding: 5px 0px;
+    /* font-size: 15px; */
+}
+
+select {
+    margin-bottom: 10px;
+    height: 25px;
+    width: 80px;
+    background-color: white;
+    border: 1px solid #ccc;
+}
+
+select:focus {
+    outline: none;
+}
+
+input {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    /* box-shadow: none; */
+}
+
+input:focus {
+    outline: none;
+    border: 1px solid teal;
+}
+
+textarea {
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+textarea:focus {
+    outline: none;
+    border: 1px solid teal;
+}
+
+.error {
+    font-size: 10px;
+    color: red;
+}
+
+/* .title {
+    font-size: 30px;
+    justify-self: center;
+} */
