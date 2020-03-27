@@ -3,12 +3,10 @@ form {
     flex-direction: column;
     text-align: left;
     padding-top: 10px;
-    /* padding: 20px; */
 }
 
 label {
     padding: 5px 0px;
-    /* font-size: 15px; */
 }
 
 select {
@@ -28,7 +26,6 @@ input {
     padding: 5px;
     border-radius: 3px;
     border: 1px solid #ccc;
-    /* box-shadow: none; */
 }
 
 input:focus {
@@ -53,8 +50,3 @@ textarea:focus {
     font-size: 10px;
     color: red;
 }
-
-/* .title {
-    font-size: 30px;
-    justify-self: center;
-} */

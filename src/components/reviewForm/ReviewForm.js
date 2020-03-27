@@ -1,5 +1,4 @@
 import React from 'react';
-import StarRating from '../starRating/StarRating';
 import './ReviewForm.css';
 
 class ReviewForm extends React.Component {
@@ -75,8 +74,6 @@ class ReviewForm extends React.Component {
                 <option value="4">Four star</option>
                 <option value="5">Five star</option>
             </select>
-
-            {/* <StarRating></StarRating> */}
 
             <label>Your name</label>
             <input type="text" placeholder="Enter text here..." ref={input => this.name = input} />

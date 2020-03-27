@@ -1,182 +1,9 @@
 import React from 'react';
 import RoadieComm from './assets/Software-Box-Mock-Up.jpg';
 import './App.css';
-import ReviewForm from './components/reviewForm/ReviewForm.js';
-import StarRating from './components/starRating/StarRating';
-// import ProgressBar from 'react-bootstrap/ProgressBar'
-
-
-function RatingBars(props) {
-  var fillWidth = 0
-  fillWidth = ((props.rating * 100) / props.numReviews) + '%'
-  // console.log(props.index)
-  // console.log(props.rating)
-  // console.log(fillWidth)
-  // console.log(props.star)
-  return(
-    <div className="rating" key={props.star} value={props.rating}>
-      <button className="rating-button" type="button" key={props.star} value={props.star} onClick={e => props.filterReviews(e.target.value)}>{props.star} star</button>
-      <div className="rating-bar">
-        <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
-      </div>
-    </div>
-  )
-}
-
-function Ratings(props) {
-  const stars = [5,4,3,2,1]
-  var ratingCounts = []
-  // var starButtons = []
-  const numReviews = props.state.numReviews 
-  var averageRating = 0
-  // var fillWidth = 0
-  // console.log(rating)
-
-  for (let i=0; i<5; i++) {
-    ratingCounts[i] = 0
-  }
-
-  // for (let i=0; i<5; i++) {
-  //   starButtons[i] = i
-  // }
-
-  props.state.reviews.map((review, index) => {
-    const rating = parseInt(review.Rating);
-    // console.log(review.Rating)
-    averageRating = averageRating + rating
-    // console.log(averageRating)
-    switch(rating) {
-      case 1:
-        ratingCounts[4] = ratingCounts[4] + 1
-        break;
-      case 2:
-        ratingCounts[3] = ratingCounts[3] + 1
-        break;
-      case 3:
-        ratingCounts[2] = ratingCounts[2] + 1
-        break;
-      case 4:
-        ratingCounts[1] = ratingCounts[1] + 1
-        break;
-      case 5:
-        ratingCounts[0] = ratingCounts[0] + 1
-        break;
-      default: 
-        return null
-    }
-    return null
-  })
-    // console.log(ratingCounts.length)
-  
-  averageRating = Math.floor(averageRating / numReviews)
-  // console.log(ratingCounts.findIndex(2))
-
-  return(
-    <div className="ratings-container">
-      <div className="average-container">
-        <StarRating static={true} rating={averageRating}/>
-        <div className="average">{averageRating} out of 5</div>
-      </div>
-      <div>{numReviews} reviews</div>
-      <div className="rating-bars-container">
-        {stars.map((star, index) => (
-          <RatingBars key={star} star={star} rating={ratingCounts[index]} numReviews={numReviews} filterReviews={props.filterReviews}></RatingBars>
-          // fillWidth = ((rating * 100) / props.numReviews) + '%'
-          // <div className="rating" key={index} value={rating}>
-          //   <button className="rating-button" type="button" key={index} value={index + 1} onClick={e => props.filterReviews(e.target.value)}>{index + 1} star</button>
-          //   <div className="rating-bar">
-          //     <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
-          //   </div>
-          // </div>
-        ))}
-        {/* <RatingBars ratingCounts={ratingCounts} numReviews={numReviews} filterReviews={props.filterReviews}></RatingBars> */}
-        <button className="rating-all-button" type="button" value="" onClick={e => props.filterReviews(e.target.value)}>All reviews</button>    
-      </div> 
-        {/* <button type="button" value="" onClick={e => props.filterReviews(e.target.value)}>All reviews</button>     */}
-    </div>
-  )
-
-  // console.log(numReviews)
-  // for (let [key,value] of ratingCounts) {
-  //   fillWidth = ((value * 100) / numReviews) + '%'
-  //   console.log(key + " = " + value + " -> " + fillWidth)
-  //   return (
-      
-  //      <div className="rating-bars-container">
-  //        <button className="rating-button" type="button" value={key} onClick={e => props.filterReviews(e.target.value)}>{key} star</button>
-  //        <div className="rating-bar">
-  //          <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
-  //        </div>
-  //      </div>
-  //   )
-  // }
-
-  // ratingCounts.map((ratingBar, index) => {
-  //   fillWidth = ((ratingBar.value * 100) / numReviews) + '%'
-  //   console.log(ratingBar.key + " = " + ratingBar.value + " -> " + fillWidth)
-  //   return (
-  //     <div className="ratings-container">
-  //      <div className="rating-bars-container">
-  //        <button className="rating-button" type="button" value={ratingBar.key} onClick={e => props.filterReviews(e.target.value)}>{ratingBar.key} star</button>
-  //        <div className="rating-bar">
-  //          <div className="rating-bar-fill" style={ { "width": fillWidth} }></div>
-  //        </div>
-  //      </div></div>
-  //   )
-  // })
-
-  
-
-  // return(
-  //   <div className="ratings-container">
-  //     <div className="rating-bars-container">
-  //       <button className="rating-button" type="button" value="5" onClick={e => props.filterReviews(e.target.value)}>5 star</button>
-  //       <div className="rating-bar">
-  //         <div className="rating-bar-fill" style={ { "width": "30%" } }></div>
-  //       </div>
-  //     </div>
-      
-  //     <button type="button" value="4" onClick={e => props.filterReviews(e.target.value)}>4 star</button>
-  //     <button type="button" value="3" onClick={e => props.filterReviews(e.target.value)}>3 star</button>
-  //     <button type="button" value="2" onClick={e => props.filterReviews(e.target.value)}>2 star</button>
-  //     <button type="button" value="1" onClick={e => props.filterReviews(e.target.value)}>1 star</button>
-  //     <button type="button" value="" onClick={e => props.filterReviews(e.target.value)}>All reviews</button>
-  //   </div>
-  // )
-}
-
-function ReviewCard(props) {
-  // console.log(props.key)
-  return(
-    <div className="review-card">
-      <div className="review-header">
-        <div>
-          <b className="review-title">{props.review.Title}</b>
-          <div className="user">by {props.review.User} on {props.review.Date}</div>
-        </div>
-        <StarRating static={true} rating={props.review.Rating}/>
-      </div>
-      <p className="review">{props.review.Review}</p>
-    </div>
-  )
-}
-
-function Modal(props) {
-    return(
-      <div>
-        {props.show 
-          ? <section className="modal">
-              <div className="modal-container">
-                <span className="close-button" onClick={props.close}>&times;</span>
-                <h2 className="title">ADD REVIEW</h2>
-                <ReviewForm close={props.close} addReview={props.addReview}></ReviewForm>
-              </div> 
-            </section>
-          : null
-        }
-      </div>
-    )
-}
+import Modal from './components/modal/Modal';
+import Ratings from './components/ratings/Ratings';
+import ReviewCard from './components/reviewCard/ReviewCard';
 
 class App extends React.Component {
   constructor() {
@@ -187,11 +14,7 @@ class App extends React.Component {
       reviews: [],
       filter: "",
       numReviews: null,
-      one: 0,
-      two: 0,
-      three: 0,
-      four: 0,
-      five: 0
+      empty: false,
     }
 
     this.showModal = this.showModal.bind(this);
@@ -227,7 +50,8 @@ class App extends React.Component {
     // console.log(this.state.numReviews)
     this.setState({
       reviews: [...this.state.reviews, newReview],
-      numReviews: this.state.numReviews + 1
+      numReviews: this.state.numReviews + 1,
+      filter: ""
     });
     // console.log(this.state.numReviews)
   }
@@ -245,8 +69,9 @@ class App extends React.Component {
     <div className="App">
       <header className="header"></header>
       <main className="main">
-        {/* ---------------------- */}
-        <div className="info">
+        
+        {/* ---------Header------------- */}
+        <section className="info">
           <div className="image-container">
             <img className="roadie-image" src={RoadieComm} alt="Roadie Communicator"/>
           </div>
@@ -260,17 +85,20 @@ class App extends React.Component {
               <button className="button solid">ADD TO CART</button>
             </div>
           </div>
-        </div>
+        </section>
+
         {/* -------Modal----------- */}
         <Modal show={this.state.show} close={this.hideModal} addReview={this.addReview}></Modal>
-        {/* -----------Reviews---------------- */}
-        <div className="customer-reviews">
+
+        {/* -----------Customer Reviews---------------- */}
+        <section className="customer-reviews">
           <h2 className="title">CUSTOMER REVIEWS</h2>
           <div className="reviews-container">
-            {/* -----------Ratings---------------- */}
 
-            {/* <div className="rating-container">raiting container</div> */}
+            {/* -----------Ratings---------------- */}
             <Ratings state={this.state} filterReviews={this.filterReviews}></Ratings>
+
+            {/* -----------Review Cards---------------- */}
             <div className="reviews">
               {this.state.reviews.map((review, index) => {
                 if(review.Rating === this.state.filter || this.state.filter === "") {
@@ -280,7 +108,7 @@ class App extends React.Component {
               })}
             </div>
           </div>
-        </div>
+        </section>
       </main>
     </div>
     );
