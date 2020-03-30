@@ -47,29 +47,23 @@ class App extends React.Component {
   } 
 
   addReview(newReview) {
-    // console.log(this.state.numReviews)
     this.setState({
       reviews: [...this.state.reviews, newReview],
       numReviews: this.state.numReviews + 1,
       filter: ""
     });
-    // console.log(this.state.numReviews)
   }
 
   filterReviews(rating) {
-    // console.log(rating)
     this.setState({ filter: rating })
-    // console.log(this.state.filter)
   }
 
   render() {
-    // console.log(this.state.reviews)
-    // console.log(this.state.five)
     return (
     <div className="App">
       <header className="header"></header>
       <main className="main">
-        
+
         {/* ---------Header------------- */}
         <section className="info">
           <div className="image-container">

@@ -22,9 +22,6 @@ p {
   display: flex;
   flex-direction: row;
   line-height: 1.4;
-  /* flex-wrap: wrap-reverse; */
-  /* padding: 60px 100px; */
-  /* justify-content: space-between; */
   /* background-color: blue; */
 }
 
@@ -32,7 +29,6 @@ p {
   display: flex;
   justify-content: center;
   flex-grow: 2;
-  /* padding: 20px; */
 }
 
 .roadie-image {
@@ -43,7 +39,6 @@ p {
 .roadie-info {
   max-width: 680px;
   min-width: 300px;
-  /* flex-grow: 0; */
   padding: 0px 40px 40px;
   text-align: left;
   /* background-color: green; */
@@ -63,7 +58,9 @@ p {
 }
 
 .buttons-container {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   margin: 10px 0px;
 }
 
@@ -72,9 +69,9 @@ p {
   font-weight: 600;
   font-size: 15px;
   padding: 10px 20px;
-  margin-left: 10px;
+  margin: 10px;
   border-radius: 5px;
-  width: 150px;
+  width: 155px;
 }
 
 .regular {
@@ -116,7 +113,6 @@ p {
   transform: translate(-50%,-50%);
   padding: 30px;
   border-radius: 5px;
-  /* text-align: right; */
 }
 
 .close-button {
@@ -135,41 +131,27 @@ p {
 
 .customer-reviews {
   margin-top: 30px;
-  /* background-color: palegreen; */
   text-align: left;
+  /* background-color: palegreen; */
 }
 
 .reviews-container {
   display: flex;
   flex-direction: row;
-  /* flex-wrap: wrap; */
-  /* justify-content: center; */
   margin-top: 20px;
-  /* width: 60%; */
-  /* justify-content: space-around; */
   /* background-color: pink; */
-  /* border-bottom: 0.5px solid rgb(211, 211, 211); */
 }
 
 .reviews {
   display: flex;
   flex-flow: row wrap;
-  /* background-color: purple; */
   width: 100%;
-  /* max-height: 1000px;
-  overflow: scroll; */
-  /* flex-grow: 2; */
-  /* width: 700px; */
-  /* justify-self: center; */
   justify-content: center;
   border-bottom: 0.5px solid rgb(211, 211, 211);
-  /* content: "Hola";
-  color: black */
+  /* background-color: purple; */
 }
 
 .review-card {
-  /* display: flex;
-  flex-direction: column; */
   height: 250px;
   width: 300px;
   background-color: white;
@@ -177,7 +159,6 @@ p {
   border-radius: 5px;
   border: 0.5px solid rgb(211, 211, 211);
   margin: 10px;
-  /* overflow: scroll; */
 }
 
 .review-header {
@@ -193,7 +174,6 @@ p {
 
 .review {
   overflow: scroll;
-  /* white-space:pre-wrap; */
   margin-top: 5px;
   line-height: 1.4;
   max-height: 200px;
@@ -203,19 +183,12 @@ p {
   position: -webkit-sticky;
   position: sticky;
   top: 20px;
-  /* position: fixed; */
-  /* position: sticky; */
-  /* float: left; */
   display: flex;
   flex-direction: column;
-  /* flex-grow: 0; */
   height: 320px;
   min-width: 300px;
-  /* width: 40%; */
   margin: 0px 10px 30px 0px;
   /* background-color: thistle; */
-  /* justify-self: left; */
-  /* align-self: left; */
 }
 
 .average-container {
@@ -243,27 +216,21 @@ p {
 }
 
 .rating-button {
-  /* height: 100%; */
   width: 70px;
   color: rgb(211, 167, 23);
   border: none;
   background-color: transparent;
   font-size: 15px;
   text-decoration: underline;
-  /* text-decoration: rgb(211, 167, 23);; */
 }
 
 .rating-all-button {
-  /* align-self: center;
-  width: 80%; */
   color: rgb(211, 167, 23);
-  /* background-color: rgb(211, 167, 23); */
   border: 0.5px solid rgb(211, 167, 23);
-  /* background-color: transparent; */
+  background-color: transparent;
   font-size: 15px;
   margin: 5px 0px 0px 10px;
   border-radius: 5px;
-  /* text-decoration: underline; */
 }
 
 .rating-button:focus, .rating-all-button:focus {
@@ -280,12 +247,11 @@ p {
   width: 100%;
   margin-left: 10px;
   background-color: white;
-  border: 0.5px solid rgb(199, 199, 199);
+  border: 0.5px solid #ccc;
 }
 
 .rating-bar-fill {
   height: 30px;
-  /* width: 50%; */
   background-color: rgb(211, 167, 23);
 }
 
@@ -297,33 +263,110 @@ p {
   color: rgb(211, 167, 23);
 }
 
+/* MEDIA QUERIES */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Large Desktop */
+@media only screen and (min-width: 1700px) {
+  .main {
+    padding: 60px 400px;
+    /* background-color: green; */
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Tablet */
+@media screen and (max-width: 1440px) {
+  .main {
+    padding: 60px 200px;
+    /* background-color: green; */
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media screen and (max-width: 1024px) {
+  .main {
+    padding: 80px 100px;
+    /* background-color: red; */
+  }
+
+  .info {
+    flex-wrap: wrap-reverse;
+  }
+
+  .rating-button {
+    width: 90px;
+  }
+
+  .modal-container {
+    width: 50%;
+  }
+
+  .buttons-container {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .reviews-container {
+    flex-wrap: wrap; 
+    justify-content: center;
+  }
+
+  .modal-container {
+    width: 60%;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+  .main {
+    padding: 40px 15px;
+    /* background-color: rgb(0, 23, 128); */
+  }
+
+  .header {
+    height: 30px;
+    background-color: black;
+  }
+  
+  .title {
+    font-size: 25px;
+  }
+
+  .roadie-image {
+    height: 300px;
+    width: 250px;
+  }
+
+  .roadie-info {
+    min-width: 200px;
+    padding: 0px 15px 30px;
+  }
+
+  .modal-container {
+    width: 70%;
+    padding: 20px;
+  }
+
+  .buttons-container {
+    margin: 0px 0px;
+  }
+
+  .ratings-container {
+    position: relative;
+    margin: 0px 0px 50px 0px;
+  }
+
+
+  .customer-reviews {
+    padding: 15px;
+  }
+
+  .review-card {
+    height: 220px;
+    width: 250px;
+  }
+
+  .review {
+    font-size: 15px;
+    max-height: 150px;
   }
 }

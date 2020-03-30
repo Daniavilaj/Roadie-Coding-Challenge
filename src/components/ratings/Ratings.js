@@ -4,10 +4,6 @@ import StarRating from '../starRating/StarRating';
 function RatingBars(props) {
     var fillWidth = 0
     fillWidth = ((props.rating * 100) / props.numReviews) + '%'
-    // console.log(props.index)
-    // console.log(props.rating)
-    // console.log(fillWidth)
-    // console.log(props.star)
     return(
       <div className="rating" key={props.star} value={props.rating}>
         <button className="rating-button" type="button" key={props.star} value={props.star} onClick={e => props.filterReviews(e.target.value)}>{props.star} star</button>
@@ -30,9 +26,7 @@ export default function Ratings({ state, filterReviews } ) {
     
     state.reviews.map((review, index) => {
         const rating = parseInt(review.Rating);
-        // console.log(review.Rating)
         averageRating = averageRating + rating
-        // console.log(averageRating)
         switch(rating) {
         case 1:
             ratingCounts[4] = ratingCounts[4] + 1
@@ -54,10 +48,8 @@ export default function Ratings({ state, filterReviews } ) {
         }
         return null
     })
-        // console.log(ratingCounts.length)
     
     averageRating = Math.floor(averageRating / numReviews)
-    // console.log(ratingCounts.findIndex(2))
     
     return(
         <div className="ratings-container">
