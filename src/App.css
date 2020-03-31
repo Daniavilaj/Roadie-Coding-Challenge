@@ -76,6 +76,7 @@ p {
 
 .regular {
   color: teal;
+  border:  0.5px solid teal;
 }
 
 .solid {
