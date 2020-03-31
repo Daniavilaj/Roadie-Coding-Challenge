@@ -6,8 +6,8 @@ Interactive product review page for Roadie Communicator
 
 * Rating Summary:
     * Overall average star rating
-    * Rating bars displays the number of reviews per star rating
-    * Auto updates when a new review is added
+    * Rating bars display number of reviews per star rating
+    * Auto updates when new review is added
     * Rating summary made sticky for context
     * Filtering of reviews per star rating 
     
